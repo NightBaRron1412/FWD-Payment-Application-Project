@@ -74,23 +74,27 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData)
 /* Testing (Debugging) functions */
 #ifdef DEBUG
 void getCardHolderNameTest(void)
-{ /*
-     printf("\nTester Name: Amir Shetaia\n");
-     printf("Function Name: getCardHolderName\n");
-     printf("\nTest Case 1: \n");
-     printf("Input Data: Amir Mohammed Shetaia\n");
-     printf("Expected Output: 0\n");
-     printf("Actual Output: %d\n", getCardHolderName(&cardData));
-     printf("\nTest Case 2: \n");
-     printf("Input Data: Amir\n");
-     printf("Expected Output: 1\n");
-     printf("Actual Output: %d\n", getCardHolderName(&cardData));
-     printf("\nTest Case 3: \n");
-     printf("Input Data: Amir Mohammed Bedier Shetaia\n");
-     printf("Expected Output: 1\n");
-     printf("Actual Output: %d\n", getCardHolderName(&cardData));*/
+{
+    printf("\nTester Name: Amir Shetaia\n");
+    printf("Function Name: getCardHolderName\n");
+    printf("\nTest Case 1: \n");
+    printf("Input Data: Amir Mohammed Shetaia\n");
+    printf("Expected Output: 0\n");
+    printf("Actual Output: %d\n", getCardHolderName(&cardData));
+    printf("\nTest Case 2: \n");
+    printf("Input Data: Amir\n");
+    printf("Expected Output: 1\n");
+    printf("Actual Output: %d\n", getCardHolderName(&cardData));
+    printf("\nTest Case 3: \n");
+    printf("Input Data: Amir Mohammed Bedier Shetaia\n");
+    printf("Expected Output: 1\n");
+    printf("Actual Output: %d\n", getCardHolderName(&cardData));
     printf("\nTest Case 4: \n");
     printf("Input Data: Amir12 Moh34 Shetaia43\n");
+    printf("Expected Output: 1\n");
+    printf("Actual Output: %d\n", getCardHolderName(&cardData));
+    printf("\nTest Case 5: \n");
+    printf("Input Data: 123456789012345678901\n");
     printf("Expected Output: 1\n");
     printf("Actual Output: %d\n", getCardHolderName(&cardData));
 }

@@ -3,7 +3,7 @@
  * @brief A header file that includes functions prototypes and structure for card related ops.
  *
  * @author Amir Shetaia
- * @version 2.0
+ * @version 2.1
  * @date Nov 15 , 2022
  *
  */
