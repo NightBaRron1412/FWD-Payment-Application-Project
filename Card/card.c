@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "../include/Std_Types.h"
 #include "card.h"
 
@@ -9,14 +10,23 @@ ST_cardData_t cardData;
 /* A function that gets the card holder name from the user */
 EN_cardError_t getCardHolderName(ST_cardData_t *cardData)
 {
-
+    uint8_t i = 0;
     /* Get the card holder name from the user */
     printf("Enter your card holder name: ");
     gets(cardData->cardHolderName);
-
     /* Check if the name is valid */
     if ((cardData->cardHolderName != NULL) && strlen(cardData->cardHolderName) >= 20 && strlen(cardData->cardHolderName) <= 24)
     {
+        /* Check if the name contains any numbers or special symbols */
+        while (cardData->cardHolderName[i] != '\0')
+        {
+            if (isdigit(cardData->cardHolderName[i]) || ispunct(cardData->cardHolderName[i]))
+            {
+                return WRONG_NAME;
+            }
+            i++;
+        }
+
         return CARD_OK;
     }
     else
@@ -64,19 +74,23 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData)
 /* Testing (Debugging) functions */
 #ifdef DEBUG
 void getCardHolderNameTest(void)
-{
-    printf("\nTester Name: Amir Shetaia\n");
-    printf("Function Name: getCardHolderName\n");
-    printf("\nTest Case 1: \n");
-    printf("Input Data: Amir Mohammed Shetaia\n");
-    printf("Expected Output: 0\n");
-    printf("Actual Output: %d\n", getCardHolderName(&cardData));
-    printf("\nTest Case 2: \n");
-    printf("Input Data: Amir\n");
-    printf("Expected Output: 1\n");
-    printf("Actual Output: %d\n", getCardHolderName(&cardData));
-    printf("\nTest Case 3: \n");
-    printf("Input Data: Amir Mohammed Bedier Shetaia\n");
+{ /*
+     printf("\nTester Name: Amir Shetaia\n");
+     printf("Function Name: getCardHolderName\n");
+     printf("\nTest Case 1: \n");
+     printf("Input Data: Amir Mohammed Shetaia\n");
+     printf("Expected Output: 0\n");
+     printf("Actual Output: %d\n", getCardHolderName(&cardData));
+     printf("\nTest Case 2: \n");
+     printf("Input Data: Amir\n");
+     printf("Expected Output: 1\n");
+     printf("Actual Output: %d\n", getCardHolderName(&cardData));
+     printf("\nTest Case 3: \n");
+     printf("Input Data: Amir Mohammed Bedier Shetaia\n");
+     printf("Expected Output: 1\n");
+     printf("Actual Output: %d\n", getCardHolderName(&cardData));*/
+    printf("\nTest Case 4: \n");
+    printf("Input Data: Amir12 Moh34 Shetaia43\n");
     printf("Expected Output: 1\n");
     printf("Actual Output: %d\n", getCardHolderName(&cardData));
 }

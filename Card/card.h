@@ -12,7 +12,7 @@
 #define CARD_H
 
 /* Uncomment to compile the testing functions */
-// #define DEBUG
+#define DEBUG
 
 /* A structure that contains the card data */
 typedef struct ST_cardData_t
