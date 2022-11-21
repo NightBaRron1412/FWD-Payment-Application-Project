@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include "../include/Std_Types.h"
+#include "../include/Bool.h"
 #include "../Card/card.h"
 #include "../Terminal/terminal.h"
 #include "server.h"
@@ -37,6 +38,7 @@ EN_transState_t receiveTransactionData(ST_transaction_t *transData)
             if (!isAmountAvailable(&terminalData, &accountRefrence))
             {
                 accountRefrence.balance -= terminalData.transAmount;
+                printf("\nAccount balance after transaction: %f\n", accountRefrence.balance);
                 transState = APPROVED;
             }
             else
@@ -65,52 +67,58 @@ EN_transState_t receiveTransactionData(ST_transaction_t *transData)
 /* A function to check if the account exists in the database */
 EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t *accountRefrence)
 {
-    uint8_t found = 0;
+    EN_serverError_t accountError = ACCOUNT_NOT_FOUND; /* account error flag */
+
+    uint8_t found = FALSE; /* account found flag */
 
     /* Loop on the database to find the account */
     for (uint8_t i = 0; i <= 5; i++)
     {
+        /* Check if the account exists */
         if (strcmp(cardData->primaryAccountNumber, accountsDB[i].primaryAccountNumber) == 0)
         {
-            found = 1;
+            found = TRUE; /* account found */
             *accountRefrence = accountsDB[i];
-            return SERVER_OK;
+            accountError = SERVER_OK;
+            break;
         }
     }
 
-    if (found == 0)
+    /* Check if the account is found */
+    if (!found)
     {
         accountRefrence = NULL;
-        return ACCOUNT_NOT_FOUND;
     }
+
+    return accountError;
 }
 
 /* A function to check if the account is blocked */
 EN_serverError_t isBlockedAccount(ST_accountsDB_t *accountRefrence)
 {
+    EN_serverError_t accountError = BLOCKED_ACCOUNT; /* account error flag */
+
     /* Check if the account is blocked */
     if (accountRefrence->state == RUNNING)
     {
-        return SERVER_OK;
+        accountError = SERVER_OK;
     }
-    else
-    {
-        return BLOCKED_ACCOUNT;
-    }
+
+    return accountError;
 }
 
 /* A function to check if the account has enough balance */
 EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t *accountRefrence)
 {
+    EN_serverError_t balanceError = LOW_BALANCE; /* account error flag */
+
     /* Check if the account has enough balance */
     if (accountRefrence->balance >= termData->transAmount)
     {
-        return SERVER_OK;
+        balanceError = SERVER_OK;
     }
-    else
-    {
-        return LOW_BALANCE;
-    }
+
+    return balanceError;
 }
 
 /* A function to save transaction data */

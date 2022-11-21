@@ -3,8 +3,8 @@
  * @brief A header file that functions prototypes for app.c
  *
  * @author Amir Shetaia
- * @version 2.0
- * @date Nov 15 , 2022
+ * @version 2.1
+ * @date Nov 21 , 2022
  *
  */
 #ifndef AAP_H

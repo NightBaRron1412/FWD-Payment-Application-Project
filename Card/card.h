@@ -4,7 +4,7 @@
  *
  * @author Amir Shetaia
  * @version 2.1
- * @date Nov 15 , 2022
+ * @date Nov 21 , 2022
  *
  */
 
@@ -12,7 +12,7 @@
 #define CARD_H
 
 /* Uncomment to compile the testing functions */
-#define DEBUG
+//#define DEBUG
 
 /* A structure that contains the card data */
 typedef struct ST_cardData_t

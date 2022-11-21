@@ -3,8 +3,8 @@
  * @brief A header file that includes functions prototypes and database for server related ops.
  *
  * @author Amir Shetaia
- * @version 2.0
- * @date Nov 15 , 2022
+ * @version 2.1
+ * @date Nov 21 , 2022
  *
  */
 
@@ -12,7 +12,7 @@
 #define SERVER_H
 
 /* Uncomment to compile the testing functions */
-// #define DEBUG
+//#define DEBUG
 
 /* A structure that contains transaction state */
 typedef enum EN_transState_t

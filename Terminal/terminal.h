@@ -3,8 +3,8 @@
  * @brief A header file that includes definitions functions prototypes for terminal related ops.
  *
  * @author Amir Shetaia
- * @version 2.0
- * @date Nov 15 , 2022
+ * @version 2.1
+ * @date Nov 21 , 2022
  *
  */
 
@@ -12,7 +12,7 @@
 #define TERMINAL_H
 
 /* Uncomment to compile the testing functions */
-// #define DEBUG
+//#define DEBUG
 
 /* Default max transaction amount */
 #define DEFAULT_MAX_TRANSACTION_AMOUNT 20000.0

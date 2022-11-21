@@ -15,6 +15,8 @@ extern ST_cardData_t cardData;
 /* A function that gets the transaction amount from the user */
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
 {
+    EN_terminalError_t dateError = WRONG_DATE; /* date error flag */
+
     /* Get the current date from system time */
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
@@ -25,18 +27,17 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
     {
         if ((termData->transactionDate[2] == '/') && (termData->transactionDate[5] == '/'))
         {
-            return TERMINAL_OK;
-        }
-        else
-        {
-            return WRONG_DATE;
+            dateError = TERMINAL_OK;
         }
     }
+    return dateError;
 }
 
 /* A function that checks if the card is expired */
 EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *termData)
 {
+    EN_terminalError_t cardDateError = EXPIRED_CARD; /* card date error flag */
+
     /* Converting the date format to MM/YY */
     uint8_t card_month[3];
     uint8_t card_year[3];
@@ -62,28 +63,24 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
     /* Check if the card is expired */
     if (atoi(card_year) > atoi(term_year))
     {
-        return TERMINAL_OK;
+        cardDateError = TERMINAL_OK;
     }
     else if (atoi(card_year) == atoi(term_year))
     {
         if (atoi(card_month) >= atoi(term_month))
         {
-            return TERMINAL_OK;
-        }
-        else
-        {
-            return EXPIRED_CARD;
+            cardDateError = TERMINAL_OK;
         }
     }
-    else
-    {
-        return EXPIRED_CARD;
-    }
+
+    return cardDateError;
 }
 
 /* A function that gets the transaction amount from the user */
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData)
 {
+    EN_terminalError_t amountError = INVALID_AMOUNT; /* amount error flag */
+
     /* Setting the transaction max amount to default value */
     setMaxAmount(&terminalData, DEFAULT_MAX_TRANSACTION_AMOUNT);
 
@@ -95,39 +92,34 @@ EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData)
     /* Check if the amount is valid */
     if (termData->transAmount > 0)
     {
-        return TERMINAL_OK;
+        amountError = TERMINAL_OK;
     }
-    else
-    {
-        return INVALID_AMOUNT;
-    }
+
+    return amountError;
 }
 
 /* A function that checks if the transaction amount is below the maximum allowed amount */
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData)
 {
+    EN_terminalError_t amountError = EXCEED_MAX_AMOUNT; /* amount error flag */
+
     /* Check if the transaction amount is below the maximum allowed amount */
     if (termData->transAmount <= termData->maxTransAmount)
     {
-        return TERMINAL_OK;
+        amountError = TERMINAL_OK;
     }
-    else
-    {
-        return EXCEED_MAX_AMOUNT;
-    }
+
+    return amountError;
 }
 
 /* A function that sets the maximum amount allowed for the transaction */
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData, float maxAmount)
 {
+    EN_terminalError_t maxAmountError = INVALID_MAX_AMOUNT; /* maximum amount error flag */
     if (maxAmount > 0)
     {
         termData->maxTransAmount = maxAmount;
-        return TERMINAL_OK;
-    }
-    else
-    {
-        return INVALID_MAX_AMOUNT;
+        maxAmountError = TERMINAL_OK;
     }
 }
 
